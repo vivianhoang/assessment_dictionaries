@@ -108,8 +108,26 @@ def get_sum_zero_pairs(numbers):
         >>> sort_pairs( get_sum_zero_pairs([1, 3, -1, 1, 1, 0]) )
         [[-1, 1], [0, 0]]
     """
+    no_duplicates = set(numbers)
+    list_of_little_lists = []
 
-    return []
+    #for each number in a set of lists, create a mini-list to hold the pairs.
+    for num in no_duplicates:
+        little_list = []
+
+        #if a number is negative or zero, find it's positive pair, and append them both to the mini list
+        if num <= 0 and abs(num) in no_duplicates:
+            little_list.append(num)
+            little_list.append(abs(num))
+
+        #as long as the little list isn't empty, append it to the long list.
+        if little_list != []:
+            list_of_little_lists.append(little_list)
+
+    #sort the final list so that it's in order.
+    final_list = sorted(list_of_little_lists)
+
+    return final_list
 
 
 def top_chars(phrase):
@@ -137,7 +155,24 @@ def top_chars(phrase):
 
     """
 
-    return []
+    letters = {}
+    words = phrase.split(" ")
+    highest = 0
+    multiple_highest = []
+
+    for word in words:
+        for letter in word:
+            letters[letter] = letters.get(letter, 0) + 1
+
+    for letter in letters:
+        if letters[letter] > highest:
+            highest = letters[letter]
+            multiple_highest = []
+            multiple_highest.append(letter)
+        elif letters[letter] == highest:
+            multiple_highest.append(letter)
+
+    print multiple_highest
 
 #####################################################################
 # You can ignore everything below this.

@@ -29,7 +29,13 @@ def count_words(phrase):
         {'Porcupine': 1, 'do.': 1, 'porcupine': 1, 'see,': 1}
     """
 
-    return {}
+    count_words = {}
+    words = phrase.split(" ")
+
+    for word in words:
+        count_words[word] = count_words.get(word, 0) + 1
+
+    return count_words
 
 
 def get_melon_price(melon_name):
@@ -52,8 +58,16 @@ def get_melon_price(melon_name):
         'No price found'
     """
 
-    return 0
+    melons = {
+        'Watermelon': 2.95,
+        'Cantaloupe': 2.50,
+        'Musk': 3.25,
+        'Christmas': 14.25,
+    }
 
+    melons[melon_name] = melons.get(melon_name, "No price found")
+
+    return melons[melon_name]
 
 def word_length_sorted(words):
     """Return list of word-lengths and words.
@@ -71,7 +85,17 @@ def word_length_sorted(words):
         [(1, ['a']), (2, ['an', 'ok']), (3, ['day']), (5, ['apple'])]
     """
 
-    return []
+    word_lengths = {}
+
+    words = sorted(words)
+    for word in words:
+        if len(word) not in word_lengths:
+            word_lengths[len(word)] = [word]
+        else:
+            word_lengths[len(word)] = word_lengths[len(word)] + [word]
+
+    items = list(word_lengths.items())
+    return items
 
 
 def translate_to_pirate_talk(phrase):
@@ -112,8 +136,22 @@ def translate_to_pirate_talk(phrase):
         >>> translate_to_pirate_talk("my student is not a man!")
         'me swabbie be not a man!'
     """
+    pirate_talk = {'sir': 'matey', 'hotel': 'fleabag inn', 'student': 'swabbie',
+                   'man': 'matey', 'professor': 'foul blaggart', 'restaurant': 'galley',
+                   'your': 'yer', 'excuse': 'arr', 'students': 'swabbies', 'are': 'be',
+                   'restroom': 'head', 'my': 'me', 'is': 'be'}
 
-    return ""
+    pirate_translation = []
+
+    words = phrase.split(" ")
+
+    for word in words:
+        if word in pirate_talk:
+            pirate_translation.append(pirate_talk[word])
+        else:
+            pirate_translation.append(word)
+
+    return " ".join(pirate_translation)
 
 
 def kids_game(names):
@@ -153,8 +191,21 @@ def kids_game(names):
     a dictionary (with the super-fast lookup they provide) can help;
     good solutions here will definitely require a dictionary.
     """
+    current_name = names[0]
+    current_letter = current_name[-1]
+    results = {current_name: current_letter}
+    keys = [current_name]
 
-    return []
+    for name in names:
+        for inner_name in names:
+            if inner_name not in results.keys() and current_letter == inner_name[0]:
+                current_name = inner_name
+                current_letter = inner_name[-1]
+                results[current_name] = current_letter
+                keys.append(current_name)
+                break
+
+    print keys
 
 #####################################################################
 # You can ignore everything below this.
